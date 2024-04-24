@@ -21,16 +21,17 @@ final class FileModuleMigrationKitTests: TestCase {
 
         let db = try await components.database().connection()
 
-        try await File.Permission.Query
+        try await File.Storage.Query
             .insert(
                 .init(
                     key: .init(rawValue: "foo.bar.baz"),
+                    value: "",
                     name: "foo"
                 ),
                 on: db
             )
 
-        try await File.Variable.Query
+        try await File.Storage.Query
             .insert(
                 .init(
                     key: .init(rawValue: "foo"),
