@@ -1,8 +1,8 @@
 import FeatherComponent
 import FeatherModuleKit
 import FeatherValidation
-import Logging
 import FileModuleKit
+import Logging
 
 public struct FileModule: FileModuleInterface {
 
@@ -17,8 +17,22 @@ public struct FileModule: FileModuleInterface {
         self.logger = logger
     }
 
-    public var storage: FileStorageInterface {
-        StorageController(
+    public var resource: FileResourceInterface {
+        ResourceController(
+            components: components,
+            file: self
+        )
+    }
+
+    public var upload: FileUploadInterface {
+        UploadController(
+            components: components,
+            file: self
+        )
+    }
+
+    public var chunk: FileChunkInterface {
+        ChunkController(
             components: components,
             file: self
         )

@@ -19,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.5.0"),
         .package(url: "https://github.com/apple/swift-nio", from: "2.61.0"),
-        .package(url: "https://github.com/feather-framework/feather-module-kit", .upToNextMinor(from: "0.2.1")),
+        .package(url: "https://github.com/feather-framework/feather-module-kit", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-database-driver-sqlite", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/feather-framework/feather-component", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-storage-driver-memory", .upToNextMinor(from: "0.5.0")),

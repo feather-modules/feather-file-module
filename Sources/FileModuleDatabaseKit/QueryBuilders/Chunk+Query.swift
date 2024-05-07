@@ -8,7 +8,7 @@
 import FeatherDatabase
 import FileModuleKit
 
-extension File.Storage {
+extension File.Chunk {
 
     public enum Query: DatabaseQuery {
         public typealias Row = Model

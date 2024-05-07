@@ -7,8 +7,8 @@
 
 import FeatherComponent
 import FeatherScripts
-import FileModuleMigrationKit
 import FileModuleKit
+import FileModuleMigrationKit
 
 extension ComponentRegistry {
 

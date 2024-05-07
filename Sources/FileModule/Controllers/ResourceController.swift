@@ -8,14 +8,17 @@
 import FeatherComponent
 import FeatherDatabase
 import FeatherModuleKit
-import Logging
 import FileModuleDatabaseKit
 import FileModuleKit
+import Logging
 
-struct StorageController: FileStorageInterface,
-    ControllerCRUDInterface
+struct ResourceController: FileResourceInterface,
+    ControllerGet,
+    ControllerList
 {
-    typealias ControllerModel = File.Storage
+    typealias Detail = File.Resource.Detail
+    typealias List = File.Resource.List
+    typealias Query = File.Resource.Query
 
     let components: ComponentRegistry
     let file: FileModuleInterface
@@ -33,7 +36,10 @@ struct StorageController: FileStorageInterface,
     static let listFilterColumns: [Model.ColumnNames] =
         [
             .key,
-            .name,
-            .value,
+            .sizeInBytes,
         ]
+
+    func bulkDelete(ids: [ID<File.Resource>]) async throws {
+
+    }
 }
