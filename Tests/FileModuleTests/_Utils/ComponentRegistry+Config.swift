@@ -41,7 +41,7 @@ extension ComponentRegistry {
             )
         )
 
-        //        try await addStorage(MemoryStorageComponentContext())
+        //try await addStorage(MemoryStorageComponentContext())
 
         let workUrl = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(UUID().uuidString)
