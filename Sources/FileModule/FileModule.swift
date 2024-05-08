@@ -1,5 +1,6 @@
 import FeatherComponent
 import FeatherModuleKit
+import FeatherStorage
 import FeatherValidation
 import FileModuleKit
 import Logging

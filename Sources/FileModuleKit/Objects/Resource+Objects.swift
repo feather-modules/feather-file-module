@@ -46,9 +46,9 @@ extension File.Resource {
 
         public struct Item: Object {
             public let id: ID<File.Resource>
-            public let sizeInBytes: Int64
+            public let sizeInBytes: UInt64
 
-            public init(id: ID<File.Resource>, sizeInBytes: Int64) {
+            public init(id: ID<File.Resource>, sizeInBytes: UInt64) {
                 self.id = id
                 self.sizeInBytes = sizeInBytes
             }
@@ -69,11 +69,11 @@ extension File.Resource {
 
     public struct Detail: Object {
         public let id: ID<File.Resource>
-        public let sizeInBytes: Int64
+        public let sizeInBytes: UInt64
 
         public init(
             id: ID<File.Resource>,
-            sizeInBytes: Int64
+            sizeInBytes: UInt64
         ) {
             self.id = id
             self.sizeInBytes = sizeInBytes

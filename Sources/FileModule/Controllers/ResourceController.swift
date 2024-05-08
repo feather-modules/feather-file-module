@@ -8,9 +8,11 @@
 import FeatherComponent
 import FeatherDatabase
 import FeatherModuleKit
+import FeatherStorage
 import FileModuleDatabaseKit
 import FileModuleKit
 import Logging
+import NanoID
 
 struct ResourceController: FileResourceInterface,
     ControllerGet,
@@ -39,7 +41,31 @@ struct ResourceController: FileResourceInterface,
             .sizeInBytes,
         ]
 
-    func bulkDelete(ids: [ID<File.Resource>]) async throws {
+    func download(_ id: ID<File.Resource>, range: ClosedRange<Int>?)
+        async throws -> File.BinaryData
+    {
+        let db = try await components.database().connection()
+        let storage = try await components.storage()
 
+        try await Query.require(id.toKey(), on: db)
+
+        return try await storage.download(
+            key: id.toStorageFileKey(),
+            range: range
+        )
+    }
+
+    func remove(_ id: ID<File.Resource>) async throws {
+        try await remove(ids: [id])
+    }
+
+    func remove(ids: [ID<File.Resource>]) async throws {
+        let db = try await components.database().connection()
+        let storage = try await components.storage()
+
+        for id in ids {
+            try await Query.delete(id.toKey(), on: db)
+            try await storage.delete(key: id.toStorageFileKey())
+        }
     }
 }

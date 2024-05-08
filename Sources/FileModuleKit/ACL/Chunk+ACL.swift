@@ -20,16 +20,14 @@ extension File.Chunk {
 
         public static let list: Permission = .fileChunk(.list)
         public static let detail: Permission = .fileChunk(.detail)
-        public static let create: Permission = .fileChunk(.create)
-        public static let update: Permission = .fileChunk(.update)
-        public static let delete: Permission = .fileChunk(.delete)
+        public static let upload: Permission = .fileChunk(.custom("upload"))
+        public static let remove: Permission = .fileChunk(.delete)
 
         public static var all: [Permission] = [
             Self.list,
             Self.detail,
-            Self.create,
-            Self.update,
-            Self.delete,
+            Self.upload,
+            Self.remove,
         ]
     }
 }

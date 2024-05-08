@@ -26,7 +26,7 @@ extension File.Chunk {
 //        on db: Database) async throws
 //    {
 //        try await File.Upload.Query.require(uploadId.toKey(), on: db)
-//        
+//
 //        //TODO: filter uploadId and number and throw Error.chunkNumberAlreadyExists
 //        //Query.count(filter: , on:    )
 ////        throw File.Error.chunkNumberAlreadyExists(uploadId: uploadId, number: number)

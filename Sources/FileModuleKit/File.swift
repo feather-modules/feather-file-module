@@ -1,5 +1,7 @@
 import FeatherACL
 import FeatherModuleKit
+import FeatherStorage
+import NIOCore
 
 extension FeatherACL.Permission {
 
@@ -8,20 +10,18 @@ extension FeatherACL.Permission {
     }
 }
 
-public typealias ByteArray = [UInt8]  //TODO: replace for the appropriate one
-
 public enum File {
+    public typealias BinaryData = ByteBuffer
 
     public enum ACL: ACLSet {
 
         public static var all: [FeatherACL.Permission] {
-            Resource.ACL.all
+            Resource.ACL.all + Upload.ACL.all + Chunk.ACL.all
         }
     }
 
     public enum Error: Swift.Error {
         case unknown
-        case chunkNumberAlreadyExists(uploadId: ID<Upload>, number: Int)
     }
 
     public enum Resource: Identifiable {}

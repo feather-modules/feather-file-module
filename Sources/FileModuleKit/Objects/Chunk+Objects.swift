@@ -50,8 +50,11 @@ extension File.Chunk {
             public let uploadId: ID<File.Upload>
             public let number: Int
 
-            public init(id: ID<File.Chunk>, uploadId: ID<File.Upload>, number: Int)
-            {
+            public init(
+                id: ID<File.Chunk>,
+                uploadId: ID<File.Upload>,
+                number: Int
+            ) {
                 self.id = id
                 self.uploadId = uploadId
                 self.number = number
@@ -88,10 +91,10 @@ extension File.Chunk {
     }
 
     public struct Upload: Object {
-        public let data: ByteArray
+        public let data: File.BinaryData
 
         public init(
-            data: ByteArray
+            data: File.BinaryData
         ) {
             self.data = data
         }

@@ -18,7 +18,7 @@ extension File.Chunk {
         public let key: KeyType
         public let uploadKey: Key<File.Upload>
         public let number: Int
-        
+
         public init(
             key: KeyType,
             uploadKey: Key<File.Upload>,

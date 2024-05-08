@@ -33,7 +33,8 @@ final class FileModuleMigrationKitTests: TestCase {
         try await File.Upload.Query
             .insert(
                 .init(
-                    key: .init(rawValue: "foo")
+                    key: .init(rawValue: "foo"),
+                    resourceKey: .init(rawValue: "foo")
                 ),
                 on: db
             )

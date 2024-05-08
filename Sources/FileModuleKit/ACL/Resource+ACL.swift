@@ -20,16 +20,16 @@ extension File.Resource {
 
         public static let list: Permission = .fileResource(.list)
         public static let detail: Permission = .fileResource(.detail)
-        public static let create: Permission = .fileResource(.create)
-        public static let update: Permission = .fileResource(.update)
-        public static let delete: Permission = .fileResource(.delete)
+        public static let download: Permission = .fileResource(
+            .custom("download")
+        )
+        public static let remove: Permission = .fileResource(.delete)
 
         public static var all: [Permission] = [
             Self.list,
             Self.detail,
-            Self.create,
-            Self.update,
-            Self.delete,
+            Self.download,
+            Self.remove,
         ]
     }
 }

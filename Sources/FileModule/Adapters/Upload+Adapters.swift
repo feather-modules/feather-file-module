@@ -2,9 +2,9 @@ import FeatherComponent
 import FeatherDatabase
 import FeatherModuleKit
 import FeatherValidation
-import NanoID
 import FileModuleDatabaseKit
 import FileModuleKit
+import NanoID
 
 extension File.Upload.Model.ColumnNames: ListQuerySortKeyAdapter {
     public init(listQuerySortKeys: File.Upload.List.Query.Sort.Key) throws {
@@ -28,5 +28,19 @@ extension File.Upload.List: ListAdapter {
 extension File.Upload.ChunkedDetail: DetailAdapter {
     public init(model: File.Upload.Model) throws {
         self.init(uploadId: model.key.toID())
+    }
+}
+
+extension File.Upload.SimpleDetail: DetailAdapter {
+    public init(model: File.Resource.Model) throws {
+        self.init(resourceId: model.key.toID())
+    }
+}
+
+extension File.Upload.FinishChunkedDetail: DetailAdapter {
+    public init(model: File.Upload.Model) throws {
+        self.init(
+            resourceId: model.resourceKey.toID()
+        )
     }
 }

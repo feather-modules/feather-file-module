@@ -20,16 +20,12 @@ extension File.Upload {
 
         public static let list: Permission = .fileUpload(.list)
         public static let detail: Permission = .fileUpload(.detail)
-        public static let create: Permission = .fileUpload(.create)
-        public static let update: Permission = .fileUpload(.update)
-        public static let delete: Permission = .fileUpload(.delete)
+        public static let upload: Permission = .fileUpload(.custom("upload"))
 
         public static var all: [Permission] = [
             Self.list,
             Self.detail,
-            Self.create,
-            Self.update,
-            Self.delete,
+            Self.upload,
         ]
     }
 }

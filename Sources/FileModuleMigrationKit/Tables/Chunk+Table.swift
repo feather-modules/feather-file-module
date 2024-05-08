@@ -13,7 +13,9 @@ extension File.Chunk {
         ]
         public static let constraints: [DatabaseConstraintInterface] = [
             PrimaryKeyConstraint(Model.ColumnNames.key),
-            UniqueConstraint([Model.ColumnNames.uploadKey, Model.ColumnNames.number]),
+            UniqueConstraint([
+                Model.ColumnNames.uploadKey, Model.ColumnNames.number,
+            ]),
         ]
     }
 }

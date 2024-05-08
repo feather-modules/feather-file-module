@@ -15,11 +15,11 @@ extension File.Resource {
         public static let tableName = "file_resource"
 
         public let key: KeyType
-        public let sizeInBytes: Int64
+        public let sizeInBytes: UInt64
 
         public init(
             key: KeyType,
-            sizeInBytes: Int64
+            sizeInBytes: UInt64
         ) {
             self.key = key
             self.sizeInBytes = sizeInBytes

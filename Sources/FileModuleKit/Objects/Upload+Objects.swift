@@ -46,8 +46,7 @@ extension File.Upload {
         public struct Item: Object {
             public let id: ID<File.Upload>
 
-            public init(id: ID<File.Upload>)
-            {
+            public init(id: ID<File.Upload>) {
                 self.id = id
             }
         }
@@ -67,29 +66,25 @@ extension File.Upload {
 
     public struct SimpleDetail: Object {
         public let resourceId: ID<File.Resource>
-        
-        public init(resourceId: ID<File.Resource>)
-        {
+
+        public init(resourceId: ID<File.Resource>) {
             self.resourceId = resourceId
         }
     }
 
     public struct ChunkedDetail: Object {
         public let uploadId: ID<File.Upload>
-        
-        public init(uploadId: ID<File.Upload>)
-        {
+
+        public init(uploadId: ID<File.Upload>) {
             self.uploadId = uploadId
         }
     }
-    
-    public struct SimpleUpload: Object {
-        public let data: ByteArray
 
-        public init(
-            data: ByteArray
-        ) {
-            self.data = data
+    public struct FinishChunkedDetail: Object {
+        public let resourceId: ID<File.Resource>
+
+        public init(resourceId: ID<File.Resource>) {
+            self.resourceId = resourceId
         }
     }
 }

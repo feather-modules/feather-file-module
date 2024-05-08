@@ -28,15 +28,6 @@
       }
     },
     {
-      "identity" : "feather-database",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database",
-      "state" : {
-        "revision" : "0c2bf4e9c9861cb27e19d437c90200509e72359d",
-        "version" : "0.4.4"
-      }
-    },
-    {
       "identity" : "feather-database-driver-sqlite",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-database-driver-sqlite",
@@ -51,15 +42,6 @@
       "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
         "revision" : "cd8151198fa22920e949f890a61602f0b7f532fe",
-        "version" : "0.5.0"
-      }
-    },
-    {
-      "identity" : "feather-module-kit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-module-kit",
-      "state" : {
-        "revision" : "51e0610c24a40b47f9c1fcb64baea45f4d634d02",
         "version" : "0.5.0"
       }
     },
@@ -87,6 +69,15 @@
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
         "revision" : "c30a691516cf8b2956116f00732b99c639083af8",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "feather-storage-driver-local",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage-driver-local",
+      "state" : {
+        "revision" : "e60d23a54eb423dc3a8acf3419ec56ea11b017b4",
         "version" : "0.5.0"
       }
     },

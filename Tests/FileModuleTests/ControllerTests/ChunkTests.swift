@@ -9,7 +9,7 @@ import FeatherModuleKit
 import FileModuleKit
 import XCTest
 
-final class ChunkTests: TestCase {
+final class ResourceTests: TestCase {
     func testSimple() async throws {
     }
 }
