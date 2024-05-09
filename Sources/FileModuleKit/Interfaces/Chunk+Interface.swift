@@ -10,6 +10,7 @@ import FeatherModuleKit
 public protocol FileChunkInterface: Sendable {
 
     func list(
+        uploadId: ID<File.Upload>,
         _ input: File.Chunk.List.Query
     ) async throws -> File.Chunk.List
 

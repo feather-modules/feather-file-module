@@ -42,6 +42,24 @@ struct ChunkController: FileChunkInterface,
             .number,
         ]
 
+    func list(
+        uploadId: ID<File.Upload>,
+        _ input: File.Chunk.List.Query
+    ) async throws -> File.Chunk.List {
+        try await list(
+            input,
+            filters: [
+                .init(columns: [
+                    .init(
+                        column: .uploadKey,
+                        operator: .equal,
+                        value: uploadId
+                    )
+                ])
+            ]
+        )
+    }
+
     func upload(
         uploadId: ID<File.Upload>,
         number: Int,

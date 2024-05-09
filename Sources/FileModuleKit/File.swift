@@ -22,6 +22,8 @@ public enum File {
 
     public enum Error: Swift.Error {
         case unknown
+        case invalidDownloadRequestRange
+        case invalidUploadHTTPBody
     }
 
     public enum Resource: Identifiable {}

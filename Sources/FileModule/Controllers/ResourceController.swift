@@ -41,7 +41,7 @@ struct ResourceController: FileResourceInterface,
             .sizeInBytes,
         ]
 
-    func download(_ id: ID<File.Resource>, range: ClosedRange<Int>?)
+    func download(_ id: ID<File.Resource>, range: ClosedRange<UInt64>?)
         async throws -> File.BinaryData
     {
         let db = try await components.database().connection()
@@ -51,7 +51,9 @@ struct ResourceController: FileResourceInterface,
 
         return try await storage.download(
             key: id.toStorageFileKey(),
-            range: range
+            range: range.map {
+                .init(uncheckedBounds: (Int($0.lowerBound), Int($0.upperBound)))
+            }
         )
     }
 

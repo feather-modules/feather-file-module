@@ -94,6 +94,7 @@ final class FileModuleTests: TestCase {
             XCTAssertEqual(chunkDetail.number, i.element)
 
             let chunkList = try await file.chunk.list(
+                uploadId: chunkDetail.uploadId,
                 .init(sort: .init(by: .number, order: .asc), page: .init())
             )
 
@@ -232,6 +233,7 @@ final class FileModuleTests: TestCase {
             XCTAssertEqual(chunkDetail.number, i.element)
 
             let chunkList = try await file.chunk.list(
+                uploadId: chunkDetail.uploadId,
                 .init(sort: .init(by: .number, order: .asc), page: .init())
             )
 
