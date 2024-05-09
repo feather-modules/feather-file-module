@@ -26,11 +26,11 @@ public protocol FileChunkInterface: Sendable {
         data: File.BinaryData
     ) async throws -> File.Chunk.Detail
 
-    func remove(ids: [ID<File.Chunk>]) async throws
+    func bulkDelete(ids: [ID<File.Chunk>]) async throws
 
-    func remove(_ id: ID<File.Chunk>) async throws
+    func delete(_ id: ID<File.Chunk>) async throws
 
-    func remove(_ list: [(uploadId: ID<File.Upload>, number: Int)]) async throws
+    func bulkDelete(uploadId: ID<File.Upload>, numbers: [Int]) async throws
 
-    func remove(uploadId: ID<File.Upload>, number: Int) async throws
+    func delete(uploadId: ID<File.Upload>, number: Int) async throws
 }

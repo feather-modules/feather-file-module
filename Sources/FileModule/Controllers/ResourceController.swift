@@ -55,11 +55,11 @@ struct ResourceController: FileResourceInterface,
         )
     }
 
-    func remove(_ id: ID<File.Resource>) async throws {
-        try await remove(ids: [id])
+    func delete(_ id: ID<File.Resource>) async throws {
+        try await bulkDelete(ids: [id])
     }
 
-    func remove(ids: [ID<File.Resource>]) async throws {
+    func bulkDelete(ids: [ID<File.Resource>]) async throws {
         let db = try await components.database().connection()
         let storage = try await components.storage()
 

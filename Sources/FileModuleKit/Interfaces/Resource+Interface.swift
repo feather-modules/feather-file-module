@@ -20,7 +20,7 @@ public protocol FileResourceInterface: Sendable {
     func download(_ id: ID<File.Resource>, range: ClosedRange<Int>?)
         async throws -> File.BinaryData
 
-    func remove(ids: [ID<File.Resource>]) async throws
+    func bulkDelete(ids: [ID<File.Resource>]) async throws
 
-    func remove(_ id: ID<File.Resource>) async throws
+    func delete(_ id: ID<File.Resource>) async throws
 }

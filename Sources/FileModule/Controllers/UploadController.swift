@@ -40,7 +40,7 @@ struct UploadController: FileUploadInterface,
             .key
         ]
 
-    func createChunked() async throws -> File.Upload.ChunkedDetail {
+    func startChunked() async throws -> File.Upload.ChunkedDetail {
         let db = try await components.database().connection()
         let storage = try await components.storage()
 

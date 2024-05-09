@@ -102,22 +102,11 @@ struct ChunkController: FileChunkInterface,
         return try .init(model: chunk)
     }
 
-    func remove(ids: [ID<File.Chunk>]) async throws {
-        try await bulkDelete(ids: ids)
+    func delete(_ id: ID<File.Chunk>) async throws {
+        try await bulkDelete(ids: [id])
     }
 
-    func remove(_ id: ID<File.Chunk>) async throws {
-        try await remove(ids: [id])
-    }
-
-    func remove(_ list: [(uploadId: ID<File.Upload>, number: Int)]) async throws
-    {
-        for chunk in list {
-            try await remove(uploadId: chunk.uploadId, number: chunk.number)
-        }
-    }
-
-    func remove(uploadId: ID<File.Upload>, number: Int) async throws {
+    func bulkDelete(uploadId: ID<File.Upload>, numbers: [Int]) async throws {
         let db = try await components.database().connection()
 
         try await Query.delete(
@@ -128,10 +117,14 @@ struct ChunkController: FileChunkInterface,
                         operator: .equal,
                         value: uploadId
                     ),
-                    .init(column: .number, operator: .equal, value: number),
+                    .init(column: .number, operator: .in, value: numbers),
                 ])
             ]),
             on: db
         )
+    }
+
+    func delete(uploadId: ID<File.Upload>, number: Int) async throws {
+        try await bulkDelete(uploadId: uploadId, numbers: [number])
     }
 }

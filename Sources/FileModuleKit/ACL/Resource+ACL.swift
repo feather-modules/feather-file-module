@@ -23,13 +23,13 @@ extension File.Resource {
         public static let download: Permission = .fileResource(
             .custom("download")
         )
-        public static let remove: Permission = .fileResource(.delete)
+        public static let delete: Permission = .fileResource(.delete)
 
         public static var all: [Permission] = [
             Self.list,
             Self.detail,
             Self.download,
-            Self.remove,
+            Self.delete,
         ]
     }
 }

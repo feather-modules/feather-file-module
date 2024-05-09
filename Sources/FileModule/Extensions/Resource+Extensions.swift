@@ -9,7 +9,7 @@ import FeatherModuleKit
 import FileModuleKit
 
 extension ID<File.Resource> {
-    static func removeLastPathComponent(_ input: String) -> String {
+    private static func removeLastPathComponent(_ input: String) -> String {
         var components = input.components(separatedBy: "/")
         if components.count > 1 {
             components.removeLast()

@@ -17,7 +17,7 @@ public protocol FileUploadInterface: Sendable {
         _ id: ID<File.Upload>
     ) async throws -> File.Upload.ChunkedDetail
 
-    func createChunked() async throws -> File.Upload.ChunkedDetail
+    func startChunked() async throws -> File.Upload.ChunkedDetail
 
     func finishChunked(_ id: ID<File.Upload>) async throws
         -> File.Upload.FinishChunkedDetail
