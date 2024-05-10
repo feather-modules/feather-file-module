@@ -10,21 +10,29 @@ import FileModuleKit
 import XCTest
 
 final class FileModuleTests: TestCase {
-    static func shuffleArray<T>(_ array: [T], seed: Int) -> [T] {
-        var ret = array
-        srand48(seed)
-        for i in 0..<(array.count - 1) {
-            let j = Int(drand48() * Double(array.count - i)) + i
-            ret.swapAt(i, j)
+    struct SimpleRandomNumberGenerator: RandomNumberGenerator {
+        private var seed: UInt64
+
+        init(seed: UInt64) {
+            self.seed = seed
         }
-        return ret
+
+        mutating func next() -> UInt64 {
+            seed = (seed &* 1_664_525) &+ 1_013_904_223
+            return seed
+        }
     }
 
+    let dummyBytes = (0...(1024 * 1024 * 6)).map { _ in "0" }.joined()
+    //    let dummyBytes = ""
+    let chunkLimit = 5
+
     func testSimpleUpload() async throws {
+        var rng = SimpleRandomNumberGenerator(seed: 42)
+
         var stringData = ""
-        for i in Self.shuffleArray(Array(0...100), seed: 42) {
+        for i in Array(1...100).shuffled(using: &rng) {
             stringData += "hello-world-\(i)"
-            print(i)
         }
 
         let simpleDetail = try await file.upload.simpleUpload(
@@ -73,11 +81,13 @@ final class FileModuleTests: TestCase {
     }
 
     func testChunkedUpload() async throws {
+        var rng = SimpleRandomNumberGenerator(seed: 42)
+
         let chunkedDetail = try await file.upload.startChunked()
 
         var orderedData: [(offset: Int, element: Int, data: String)] = []
-        for i in Self.shuffleArray(Array(0...100), seed: 42).enumerated() {
-            let s = "hello-world-\(i.element)"
+        for i in Array(1...chunkLimit).shuffled(using: &rng).enumerated() {
+            let s = "hello-world-\(i.element)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
                 uploadId: chunkedDetail.uploadId,
@@ -158,10 +168,12 @@ final class FileModuleTests: TestCase {
     }
 
     func testChunkedUploadAbort() async throws {
+        var rng = SimpleRandomNumberGenerator(seed: 42)
+
         let chunkedDetail = try await file.upload.startChunked()
 
-        for i in Self.shuffleArray(Array(0...50), seed: 42) {
-            let s = "hello-world-\(i)"
+        for i in Array(1...(chunkLimit / 2)).shuffled(using: &rng) {
+            let s = "hello-world-\(i)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
                 uploadId: chunkedDetail.uploadId,
@@ -173,7 +185,7 @@ final class FileModuleTests: TestCase {
             XCTAssertEqual(chunkDetail.number, i)
         }
 
-        for i in Self.shuffleArray(Array(0...50), seed: 42) {
+        for i in Array(1...(chunkLimit / 2)).shuffled(using: &rng) {
             let chunkDetail = try await file.chunk.require(
                 uploadId: chunkedDetail.uploadId,
                 number: i
@@ -191,7 +203,8 @@ final class FileModuleTests: TestCase {
             chunkedDetail.uploadId
         )
 
-        for i in Self.shuffleArray(Array(51...100), seed: 42) {
+        for i in Array((chunkLimit / 2) + 1...chunkLimit).shuffled(using: &rng)
+        {
             let s = "hello-world-\(i)"
 
             do {
@@ -211,12 +224,14 @@ final class FileModuleTests: TestCase {
     }
 
     func testChunkedUploadChunkDelete() async throws {
+        var rng = SimpleRandomNumberGenerator(seed: 42)
+
         let chunkedDetail = try await file.upload.startChunked()
 
         var orderedData:
             [(offset: Int, element: Int, data: String, id: ID<File.Chunk>)] = []
-        for i in Self.shuffleArray(Array(0...100), seed: 42).enumerated() {
-            let s = "hello-world-\(i.element)"
+        for i in Array(1...chunkLimit).shuffled(using: &rng).enumerated() {
+            let s = "hello-world-\(i.element)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
                 uploadId: chunkedDetail.uploadId,
@@ -248,8 +263,14 @@ final class FileModuleTests: TestCase {
             }
         }
 
-        let removedElements = [0, 42, 56, 67, 12, 100]
-        let removedElementsById = [74, 32, 44, 11]
+        let todeleteitems =
+            Array(1...chunkLimit).shuffled(using: &rng)[
+                0...chunkLimit / 2
+            ]
+        let removedElements = todeleteitems[0...(todeleteitems.count / 2)]
+        let removedElementsById = todeleteitems[
+            (todeleteitems.count / 2 + 1)...
+        ]
 
         for removedElement in removedElements {
             try await file.chunk.delete(
@@ -259,7 +280,7 @@ final class FileModuleTests: TestCase {
         }
 
         for removedElement in removedElementsById {
-            try await file.chunk.delete(orderedData[removedElement].id)
+            try await file.chunk.delete(orderedData[removedElement - 1].id)
         }
 
         orderedData.removeAll { item in
@@ -270,8 +291,15 @@ final class FileModuleTests: TestCase {
         XCTAssertEqual(
             orderedData.count + removedElements.count
                 + removedElementsById.count,
-            101
+            chunkLimit
         )
+
+        let chunkList = try await file.chunk.list(
+            uploadId: chunkedDetail.uploadId,
+            .init(sort: .init(by: .number, order: .asc), page: .init())
+        )
+
+        XCTAssertEqual(chunkList.items.count, orderedData.count)
 
         let finishDetail = try await file.upload.finishChunked(
             chunkedDetail.uploadId
