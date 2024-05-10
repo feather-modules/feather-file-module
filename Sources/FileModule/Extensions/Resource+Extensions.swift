@@ -31,6 +31,10 @@ extension ID<File.Resource> {
             }
         }
 
+        if result.hasSuffix("/") {
+            result.removeLast()
+        }
+
         return result
     }
 
