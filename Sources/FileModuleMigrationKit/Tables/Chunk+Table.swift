@@ -10,6 +10,7 @@ extension File.Chunk {
             StringColumn(Model.ColumnNames.key),
             StringColumn(Model.ColumnNames.uploadKey),
             IntColumn(Model.ColumnNames.number),
+            StringColumn(Model.ColumnNames.storageKey),
         ]
         public static let constraints: [DatabaseConstraintInterface] = [
             PrimaryKeyConstraint(Model.ColumnNames.key),

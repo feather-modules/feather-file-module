@@ -12,6 +12,7 @@ import FeatherStorage
 import FileModuleDatabaseKit
 import FileModuleKit
 import Logging
+import NanoID
 
 struct ChunkController: FileChunkInterface,
     ControllerGet,
@@ -74,16 +75,17 @@ struct ChunkController: FileChunkInterface,
         )
 
         let chunk = try await storage.upload(
-            multipartId: uploadModel.key.rawValue,
+            multipartId: uploadModel.storageKey,
             key: uploadModel.resourceKey.toStorageFileKey(),
             number: number,
             buffer: data
         )
 
         let newModel = Model(
-            key: .init(rawValue: chunk.chunkId),
+            key: NanoID.generateKey(),
             uploadKey: uploadId.toKey(),
-            number: chunk.number
+            number: chunk.number,
+            storageKey: chunk.chunkId
         )
 
         try await Query.insert(newModel, on: db)

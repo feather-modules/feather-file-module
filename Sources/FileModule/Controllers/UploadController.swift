@@ -54,8 +54,9 @@ struct UploadController: FileUploadInterface,
         )
 
         let newModel = Model.init(
-            key: .init(rawValue: uploadId),
-            resourceKey: newResourceKey
+            key2: NanoID.generateKey(),
+            resourceKey: newResourceKey,
+            storageKey: uploadId
         )
 
         try await File.Upload.Query.insert(newModel, on: db)
@@ -82,10 +83,10 @@ struct UploadController: FileUploadInterface,
         )
 
         try await storage.finish(
-            multipartId: chunkedModel.key.rawValue,
+            multipartId: chunkedModel.storageKey,
             key: chunkedModel.resourceKey.toStorageFileKey(),
             chunks: chunkList.map {
-                .init(chunkId: $0.key.rawValue, number: $0.number)
+                .init(chunkId: $0.storageKey, number: $0.number)
             }
         )
 
@@ -115,7 +116,7 @@ struct UploadController: FileUploadInterface,
         )
 
         try await storage.abort(
-            multipartId: chunkedModel.key.rawValue,
+            multipartId: chunkedModel.storageKey,
             key: chunkedModel.resourceKey.toStorageFileKey()
         )
     }

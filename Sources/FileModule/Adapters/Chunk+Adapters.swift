@@ -15,6 +15,8 @@ extension File.Chunk.Model.ColumnNames: ListQuerySortKeyAdapter {
             self = .uploadKey
         case .number:
             self = .number
+        case .storageId:
+            self = .storageKey
         }
     }
 }
@@ -24,7 +26,8 @@ extension File.Chunk.List.Item: ListItemAdapter {
         self.init(
             id: model.key.toID(),
             uploadId: model.uploadKey.toID(),
-            number: model.number
+            number: model.number,
+            storageId: model.storageKey
         )
     }
 }
@@ -38,7 +41,8 @@ extension File.Chunk.Detail: DetailAdapter {
         self.init(
             id: model.key.toID(),
             uploadId: model.uploadKey.toID(),
-            number: model.number
+            number: model.number,
+            storageId: model.storageKey
         )
     }
 }

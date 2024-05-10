@@ -19,6 +19,7 @@ extension File.Chunk {
                     case id
                     case uploadId
                     case number
+                    case storageId
                 }
 
                 public let by: Keys
@@ -49,15 +50,18 @@ extension File.Chunk {
             public let id: ID<File.Chunk>
             public let uploadId: ID<File.Upload>
             public let number: Int
+            public let storageId: String
 
             public init(
                 id: ID<File.Chunk>,
                 uploadId: ID<File.Upload>,
-                number: Int
+                number: Int,
+                storageId: String
             ) {
                 self.id = id
                 self.uploadId = uploadId
                 self.number = number
+                self.storageId = storageId
             }
         }
 
@@ -78,15 +82,18 @@ extension File.Chunk {
         public let id: ID<File.Chunk>
         public let uploadId: ID<File.Upload>
         public let number: Int
+        public let storageId: String
 
         public init(
             id: ID<File.Chunk>,
             uploadId: ID<File.Upload>,
-            number: Int
+            number: Int,
+            storageId: String
         ) {
             self.id = id
             self.uploadId = uploadId
             self.number = number
+            self.storageId = storageId
         }
     }
 

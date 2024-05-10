@@ -33,8 +33,9 @@ final class FileModuleMigrationKitTests: TestCase {
         try await File.Upload.Query
             .insert(
                 .init(
-                    key: .init(rawValue: "foo"),
-                    resourceKey: .init(rawValue: "foo")
+                    key2: .init(rawValue: "foo"),
+                    resourceKey: .init(rawValue: "foo"),
+                    storageKey: "foo"
                 ),
                 on: db
             )
@@ -44,7 +45,8 @@ final class FileModuleMigrationKitTests: TestCase {
                 .init(
                     key: .init(rawValue: "foo"),
                     uploadKey: .init(rawValue: "foo"),
-                    number: 42
+                    number: 42,
+                    storageKey: "foo"
                 ),
                 on: db
             )

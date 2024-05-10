@@ -9,6 +9,7 @@ extension File.Upload {
         public static let columns: [DatabaseColumnInterface] = [
             StringColumn(Model.ColumnNames.key),
             StringColumn(Model.ColumnNames.resourceKey),
+            StringColumn(Model.ColumnNames.storageKey),
         ]
         public static let constraints: [DatabaseConstraintInterface] = [
             PrimaryKeyConstraint(Model.ColumnNames.key),

@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "feather-database",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-database",
+      "state" : {
+        "revision" : "740afab04d16a4d4b37c6a1b9f5c9d56d9d62c17",
+        "version" : "0.4.5"
+      }
+    },
+    {
       "identity" : "feather-database-driver-sqlite",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-database-driver-sqlite",
@@ -42,6 +51,15 @@
       "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
         "revision" : "cd8151198fa22920e949f890a61602f0b7f532fe",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "feather-module-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-module-kit",
+      "state" : {
+        "revision" : "51e0610c24a40b47f9c1fcb64baea45f4d634d02",
         "version" : "0.5.0"
       }
     },
