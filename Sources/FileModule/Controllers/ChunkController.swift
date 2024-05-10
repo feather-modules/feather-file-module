@@ -47,7 +47,10 @@ struct ChunkController: FileChunkInterface,
         uploadId: ID<File.Upload>,
         _ input: File.Chunk.List.Query
     ) async throws -> File.Chunk.List {
-        try await list(
+        let db = try await components.database().connection()
+        try await File.Upload.Query.require(uploadId.toKey(), on: db)
+
+        return try await list(
             input,
             filters: [
                 .init(columns: [
