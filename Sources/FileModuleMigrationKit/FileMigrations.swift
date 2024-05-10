@@ -15,7 +15,9 @@ extension File {
             ) async throws {
                 let db = try await components.database().connection()
 
-                try await Storage.Table.create(on: db)
+                try await Resource.Table.create(on: db)
+                try await Upload.Table.create(on: db)
+                try await Chunk.Table.create(on: db)
             }
         }
     }

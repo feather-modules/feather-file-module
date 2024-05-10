@@ -8,6 +8,9 @@
 import FeatherComponent
 import FeatherDatabase
 import FeatherDatabaseDriverSQLite
+import FeatherStorageDriverLocal
+import FeatherStorageDriverMemory
+import Foundation
 import Logging
 import NIO
 import SQLiteKit
@@ -35,6 +38,18 @@ extension ComponentRegistry {
         try await addDatabase(
             SQLiteDatabaseComponentContext(
                 pool: pool
+            )
+        )
+
+        //try await addStorage(MemoryStorageComponentContext())
+
+        let workUrl = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(UUID().uuidString)
+        try await addStorage(
+            LocalStorageComponentContext(
+                threadPool: threadPool,
+                eventLoopGroup: eventLoopGroup,
+                path: workUrl.absoluteString
             )
         )
     }

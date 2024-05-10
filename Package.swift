@@ -19,10 +19,11 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-log", from: "1.5.0"),
         .package(url: "https://github.com/apple/swift-nio", from: "2.61.0"),
-        .package(url: "https://github.com/feather-framework/feather-module-kit", .upToNextMinor(from: "0.2.1")),
+        .package(url: "https://github.com/feather-framework/feather-module-kit", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-database-driver-sqlite", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/feather-framework/feather-component", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-storage-driver-memory", .upToNextMinor(from: "0.5.0")),
+        .package(url: "https://github.com/feather-framework/feather-storage-driver-local", .upToNextMinor(from: "0.5.0")),
     ],
     targets: [
         .target(
@@ -70,6 +71,7 @@ let package = Package(
                 // drivers
                 .product(name: "FeatherDatabaseDriverSQLite", package: "feather-database-driver-sqlite"),
                 .product(name: "FeatherStorageDriverMemory", package: "feather-storage-driver-memory"),
+                .product(name: "FeatherStorageDriverLocal", package: "feather-storage-driver-local"),
             ]
         ),
     
@@ -82,6 +84,7 @@ let package = Package(
                 // drivers
                 .product(name: "FeatherDatabaseDriverSQLite", package: "feather-database-driver-sqlite"),
                 .product(name: "FeatherStorageDriverMemory", package: "feather-storage-driver-memory"),
+                .product(name: "FeatherStorageDriverLocal", package: "feather-storage-driver-local"),
             ]
         ),
         

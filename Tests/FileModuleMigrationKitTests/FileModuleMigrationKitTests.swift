@@ -21,23 +21,35 @@ final class FileModuleMigrationKitTests: TestCase {
 
         let db = try await components.database().connection()
 
-        try await File.Storage.Query
+        try await File.Resource.Query
             .insert(
                 .init(
                     key: .init(rawValue: "foo.bar.baz"),
-                    value: "",
-                    name: "foo"
+                    sizeInBytes: 42
                 ),
                 on: db
             )
 
-        try await File.Storage.Query
+        try await File.Upload.Query
             .insert(
                 .init(
-                    key: .init(rawValue: "foo"),
-                    value: "foo"
+                    key2: .init(rawValue: "foo"),
+                    resourceKey: .init(rawValue: "foo"),
+                    storageKey: "foo"
                 ),
                 on: db
             )
+
+        try await File.Chunk.Query
+            .insert(
+                .init(
+                    key: .init(rawValue: "foo"),
+                    uploadKey: .init(rawValue: "foo"),
+                    number: 42,
+                    storageKey: "foo"
+                ),
+                on: db
+            )
+
     }
 }

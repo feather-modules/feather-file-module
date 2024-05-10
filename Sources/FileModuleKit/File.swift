@@ -1,5 +1,7 @@
 import FeatherACL
 import FeatherModuleKit
+import FeatherStorage
+import NIOCore
 
 extension FeatherACL.Permission {
 
@@ -9,21 +11,28 @@ extension FeatherACL.Permission {
 }
 
 public enum File {
+    public typealias BinaryData = ByteBuffer
 
     public enum ACL: ACLSet {
 
         public static var all: [FeatherACL.Permission] {
-            Storage.ACL.all
+            Resource.ACL.all + Upload.ACL.all + Chunk.ACL.all
         }
     }
 
     public enum Error: Swift.Error {
         case unknown
+        case invalidDownloadRequestRange
+        case invalidUploadHTTPBody
     }
 
-    public enum Storage: Identifiable {}
+    public enum Resource: Identifiable {}
+    public enum Upload: Identifiable {}
+    public enum Chunk: Identifiable {}
 }
 
 public protocol FileModuleInterface: ModuleInterface {
-    var storage: FileStorageInterface { get }
+    var resource: FileResourceInterface { get }
+    var upload: FileUploadInterface { get }
+    var chunk: FileChunkInterface { get }
 }
