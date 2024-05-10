@@ -10,10 +10,13 @@ import FeatherDatabase
 import FeatherDatabaseDriverSQLite
 import FeatherStorageDriverLocal
 import FeatherStorageDriverMemory
+//import FeatherStorageDriverS3
 import Foundation
 import Logging
 import NIO
 import SQLiteKit
+
+//import SotoCore
 
 extension ComponentRegistry {
 
@@ -41,8 +44,10 @@ extension ComponentRegistry {
             )
         )
 
+        //memory test
         //try await addStorage(MemoryStorageComponentContext())
 
+        //local test
         let workUrl = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(UUID().uuidString)
         try await addStorage(
@@ -52,5 +57,29 @@ extension ComponentRegistry {
                 path: workUrl.absoluteString
             )
         )
+
+        //s3 test
+        //        let id = ProcessInfo.processInfo.environment["S3_ID"]!
+        //        let secret = ProcessInfo.processInfo.environment["S3_SECRET"]!
+        //        let region = ProcessInfo.processInfo.environment["S3_REGION"]!
+        //        let bucket = ProcessInfo.processInfo.environment["S3_BUCKET"]!
+        //
+        //        let client = AWSClient(
+        //            credentialProvider: .static(
+        //                accessKeyId: id,
+        //                secretAccessKey: secret
+        //            ),
+        //            httpClientProvider: .createNewWithEventLoopGroup(eventLoopGroup)
+        //        )
+        //
+        //        try await addStorage(
+        //            S3StorageComponentContext(
+        //                eventLoopGroup: eventLoopGroup,
+        //                client: client,
+        //                region: .init(rawValue: region),
+        //                bucket: .init(name: bucket),
+        //                timeout: .seconds(60)
+        //            )
+        //        )
     }
 }
