@@ -24,8 +24,8 @@ let package = Package(
         .package(url: "https://github.com/feather-framework/feather-component", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-storage-driver-memory", .upToNextMinor(from: "0.5.0")),
         .package(url: "https://github.com/feather-framework/feather-storage-driver-local", .upToNextMinor(from: "0.5.0")),
-        .package(url: "https://github.com/feather-framework/feather-storage-driver-s3", .upToNextMinor(from: "0.5.0")),
-        .package(url: "https://github.com/soto-project/soto", from: "6.0.0"),
+//        .package(url: "https://github.com/feather-framework/feather-storage-driver-s3", .upToNextMinor(from: "0.5.0")),
+//        .package(url: "https://github.com/soto-project/soto", from: "6.0.0"),
     ],
     targets: [
         .target(
@@ -74,8 +74,8 @@ let package = Package(
                 .product(name: "FeatherDatabaseDriverSQLite", package: "feather-database-driver-sqlite"),
                 .product(name: "FeatherStorageDriverMemory", package: "feather-storage-driver-memory"),
                 .product(name: "FeatherStorageDriverLocal", package: "feather-storage-driver-local"),
-                .product(name: "FeatherStorageDriverS3", package: "feather-storage-driver-s3"),
-                .product(name: "SotoS3", package: "soto"),
+//                .product(name: "FeatherStorageDriverS3", package: "feather-storage-driver-s3"),
+//                .product(name: "SotoS3", package: "soto"),
             ]
         ),
     
@@ -89,8 +89,8 @@ let package = Package(
                 .product(name: "FeatherDatabaseDriverSQLite", package: "feather-database-driver-sqlite"),
                 .product(name: "FeatherStorageDriverMemory", package: "feather-storage-driver-memory"),
                 .product(name: "FeatherStorageDriverLocal", package: "feather-storage-driver-local"),
-                .product(name: "FeatherStorageDriverS3", package: "feather-storage-driver-s3"),
-                .product(name: "SotoS3", package: "soto"),
+//                .product(name: "FeatherStorageDriverS3", package: "feather-storage-driver-s3"),
+//                .product(name: "SotoS3", package: "soto"),
             ]
         ),
         

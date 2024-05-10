@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "async-http-client",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swift-server/async-http-client.git",
-      "state" : {
-        "revision" : "a22083713ee90808d527d0baa290c2fb13ca3096",
-        "version" : "1.21.1"
-      }
-    },
-    {
       "identity" : "async-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/async-kit.git",
@@ -118,48 +109,12 @@
       }
     },
     {
-      "identity" : "feather-storage-driver-s3",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-storage-driver-s3",
-      "state" : {
-        "revision" : "1daf0acbd5848a1363d87dc09b371b1e8e5094b2",
-        "version" : "0.5.0"
-      }
-    },
-    {
       "identity" : "feather-validation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-validation",
       "state" : {
         "revision" : "0534053c786821da100ee5c82e2fcd48907e1529",
         "version" : "0.1.1"
-      }
-    },
-    {
-      "identity" : "jmespath.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/adam-fowler/jmespath.swift.git",
-      "state" : {
-        "revision" : "4513d319c4aaa6c3b2ac18e1e6566a803515ad91",
-        "version" : "1.0.2"
-      }
-    },
-    {
-      "identity" : "soto",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/soto-project/soto",
-      "state" : {
-        "revision" : "c28c3efa72e6beceae6f38f8c8fe18e7c57e3418",
-        "version" : "6.8.0"
-      }
-    },
-    {
-      "identity" : "soto-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/soto-project/soto-core.git",
-      "state" : {
-        "revision" : "3ed66ec536bc372360d7e3ec39a5e8b1870747ea",
-        "version" : "6.5.2"
       }
     },
     {
@@ -217,30 +172,12 @@
       }
     },
     {
-      "identity" : "swift-http-types",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-http-types",
-      "state" : {
-        "revision" : "12358d55a3824bd5fed310b999ea8cf83a9a1a65",
-        "version" : "1.0.3"
-      }
-    },
-    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
       "state" : {
         "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
         "version" : "1.5.4"
-      }
-    },
-    {
-      "identity" : "swift-metrics",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-metrics.git",
-      "state" : {
-        "revision" : "971ba26378ab69c43737ee7ba967a896cb74c0d1",
-        "version" : "2.4.1"
       }
     },
     {
@@ -259,42 +196,6 @@
       "state" : {
         "revision" : "fc63f0cf4e55a4597407a9fc95b16a2bc44b4982",
         "version" : "2.64.0"
-      }
-    },
-    {
-      "identity" : "swift-nio-extras",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-nio-extras.git",
-      "state" : {
-        "revision" : "a3b640d7dc567225db7c94386a6e71aded1bfa63",
-        "version" : "1.22.0"
-      }
-    },
-    {
-      "identity" : "swift-nio-http2",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-nio-http2.git",
-      "state" : {
-        "revision" : "c6afe04165c865faaa687b42c32ed76dfcc91076",
-        "version" : "1.31.0"
-      }
-    },
-    {
-      "identity" : "swift-nio-ssl",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-nio-ssl.git",
-      "state" : {
-        "revision" : "7c381eb6083542b124a6c18fae742f55001dc2b5",
-        "version" : "2.26.0"
-      }
-    },
-    {
-      "identity" : "swift-nio-transport-services",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-nio-transport-services.git",
-      "state" : {
-        "revision" : "6cbe0ed2b394f21ab0d46b9f0c50c6be964968ce",
-        "version" : "1.20.1"
       }
     },
     {

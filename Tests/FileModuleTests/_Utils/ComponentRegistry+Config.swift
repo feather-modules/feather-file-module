@@ -10,12 +10,13 @@ import FeatherDatabase
 import FeatherDatabaseDriverSQLite
 import FeatherStorageDriverLocal
 import FeatherStorageDriverMemory
-import FeatherStorageDriverS3
+//import FeatherStorageDriverS3
 import Foundation
 import Logging
 import NIO
 import SQLiteKit
-import SotoCore
+
+//import SotoCore
 
 extension ComponentRegistry {
 
@@ -44,9 +45,9 @@ extension ComponentRegistry {
         )
 
         //memory test
-        //        try await addStorage(MemoryStorageComponentContext())
+        //try await addStorage(MemoryStorageComponentContext())
 
-        //        //local test
+        //local test
         let workUrl = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(UUID().uuidString)
         try await addStorage(
