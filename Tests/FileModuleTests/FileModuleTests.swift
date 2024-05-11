@@ -23,7 +23,7 @@ final class FileModuleTests: TestCase {
         }
     }
 
-    let dummyBytes = (0...(1024 * 1024 * 6)).map { _ in "0" }.joined()
+    let dummyBytes = (0...(1024 * 1024 * 5)).map { _ in "0" }.joined()
     //    let dummyBytes = ""
     let chunkLimit = 5
 
@@ -94,6 +94,103 @@ final class FileModuleTests: TestCase {
                 number: i.element,
                 data: .init(string: s)
             )
+
+            orderedData += [(i.offset, i.element, s)]
+            orderedData.sort { lhs, rhs in
+                lhs.element < rhs.element
+            }
+
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.number, i.element)
+
+            let chunkList = try await file.chunk.list(
+                uploadId: chunkDetail.uploadId,
+                .init(sort: .init(by: .number, order: .asc), page: .init())
+            )
+
+            XCTAssertEqual(chunkList.count, UInt(i.offset + 1))
+
+            for item in chunkList.items.enumerated() {
+                XCTAssertEqual(
+                    item.element.number,
+                    orderedData[item.offset].element
+                )
+                XCTAssertEqual(item.element.uploadId, chunkedDetail.uploadId)
+            }
+        }
+
+        let finishDetail = try await file.upload.finishChunked(
+            chunkedDetail.uploadId
+        )
+
+        XCTAssertFalse(finishDetail.resourceId.rawValue.isEmpty)
+
+        let resourceList = try await file.resource.list(
+            .init(sort: .init(by: .id, order: .asc), page: .init())
+        )
+
+        XCTAssertEqual(resourceList.count, 1)
+
+        let resourceDetail = try await file.resource.require(
+            finishDetail.resourceId
+        )
+
+        XCTAssertEqual(resourceDetail.id, resourceList.items[0].id)
+        XCTAssertEqual(
+            resourceDetail.sizeInBytes,
+            resourceList.items[0].sizeInBytes
+        )
+
+        let data = try await file.resource.download(
+            finishDetail.resourceId,
+            range: nil
+        )
+
+        XCTAssertEqual(data.readableBytes, Int(resourceDetail.sizeInBytes))
+        XCTAssertEqual(
+            String(buffer: data),
+            orderedData.map { $0.data }.joined()
+        )
+
+        try await file.resource.delete(resourceDetail.id)
+
+        do {
+            let _ = try await file.resource.require(
+                resourceDetail.id
+            )
+
+            XCTFail()
+        }
+        catch ModuleError.objectNotFound(let module, let keyName) {
+            XCTAssertTrue(module.contains("File.Resource"))
+            XCTAssertEqual(keyName, "key")
+        }
+    }
+
+    func testChunkedUploadDouble() async throws {
+        var rng = SimpleRandomNumberGenerator(seed: 42)
+
+        let chunkedDetail = try await file.upload.startChunked()
+
+        var orderedData: [(offset: Int, element: Int, data: String)] = []
+        for i in Array(1...chunkLimit).shuffled(using: &rng).enumerated() {
+            let firstChunkDetail = try await file.chunk.upload(
+                uploadId: chunkedDetail.uploadId,
+                number: i.element,
+                data: .init(
+                    string: "first-hello-world-\(i.element)" + dummyBytes
+                )
+            )
+
+            let s = "hello-world-\(i.element)" + dummyBytes
+
+            let chunkDetail = try await file.chunk.upload(
+                uploadId: chunkedDetail.uploadId,
+                number: i.element,
+                data: .init(string: s)
+            )
+
+            XCTAssertEqual(chunkDetail.id, firstChunkDetail.id)
 
             orderedData += [(i.offset, i.element, s)]
             orderedData.sort { lhs, rhs in
