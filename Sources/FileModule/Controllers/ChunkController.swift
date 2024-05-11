@@ -84,16 +84,43 @@ struct ChunkController: FileChunkInterface,
             buffer: data
         )
 
-        let newModel = Model(
-            key: NanoID.generateKey(),
-            uploadKey: uploadId.toKey(),
-            number: chunk.number,
-            storageKey: chunk.chunkId
-        )
+        let ret: Model
 
-        try await Query.insert(newModel, on: db)
+        if let chunkModel = try await Query.getFirst(
+            filter: .init(groups: [
+                .init(columns: [
+                    .init(
+                        column: .uploadKey,
+                        operator: .equal,
+                        value: uploadId
+                    ),
+                    .init(column: .number, operator: .equal, value: number),
+                ])
+            ]),
+            on: db
+        ) {
+            ret = Model(
+                key: chunkModel.key,
+                uploadKey: chunkModel.uploadKey,
+                number: chunkModel.number,
+                storageKey: chunk.chunkId
+            )
+            // actually this is unnecessary but it could be useful
+            //  for the future when it comes to time stamp or whatever and
+            //  it handles when storageKey change time to time (doesn't happen in s3)
+            try await Query.update(chunkModel.key, ret, on: db)
+        }
+        else {
+            ret = Model(
+                key: NanoID.generateKey(),
+                uploadKey: uploadId.toKey(),
+                number: chunk.number,
+                storageKey: chunk.chunkId
+            )
+            try await Query.insert(ret, on: db)
+        }
 
-        return try .init(model: newModel)
+        return try .init(model: ret)
     }
 
     func require(uploadId: ID<File.Upload>, number: Int) async throws
