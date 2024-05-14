@@ -6,6 +6,7 @@
 //
 
 import FeatherModuleKit
+import NIOCore
 
 public protocol FileUploadInterface: Sendable {
 
@@ -24,6 +25,6 @@ public protocol FileUploadInterface: Sendable {
 
     func abortChunked(_ id: ID<File.Upload>) async throws
 
-    func simpleUpload(_ data: File.BinaryData) async throws
+    func simpleUpload(_ data: ByteBuffer) async throws
         -> File.Upload.SimpleDetail
 }

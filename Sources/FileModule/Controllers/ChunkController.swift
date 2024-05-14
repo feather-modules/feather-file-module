@@ -12,10 +12,10 @@ import FeatherStorage
 import FileModuleDatabaseKit
 import FileModuleKit
 import Logging
+import NIOCore
 import NanoID
 
 struct ChunkController: FileChunkInterface,
-    ControllerGet,
     ControllerDelete,
     ControllerList
 {
@@ -67,7 +67,7 @@ struct ChunkController: FileChunkInterface,
     func upload(
         uploadId: ID<File.Upload>,
         number: Int,
-        data: File.BinaryData
+        data: ByteBuffer
     ) async throws -> File.Chunk.Detail {
         let db = try await components.database().connection()
         let storage = try await components.storage()

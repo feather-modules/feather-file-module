@@ -90,7 +90,7 @@ final class FileModuleTests: TestCase {
             let s = "hello-world-\(i.element)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i.element,
                 data: .init(string: s)
             )
@@ -100,7 +100,7 @@ final class FileModuleTests: TestCase {
                 lhs.element < rhs.element
             }
 
-            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.id)
             XCTAssertEqual(chunkDetail.number, i.element)
 
             let chunkList = try await file.chunk.list(
@@ -115,12 +115,12 @@ final class FileModuleTests: TestCase {
                     item.element.number,
                     orderedData[item.offset].element
                 )
-                XCTAssertEqual(item.element.uploadId, chunkedDetail.uploadId)
+                XCTAssertEqual(item.element.uploadId, chunkedDetail.id)
             }
         }
 
         let finishDetail = try await file.upload.finishChunked(
-            chunkedDetail.uploadId
+            chunkedDetail.id
         )
 
         XCTAssertFalse(finishDetail.resourceId.rawValue.isEmpty)
@@ -175,7 +175,7 @@ final class FileModuleTests: TestCase {
         var orderedData: [(offset: Int, element: Int, data: String)] = []
         for i in Array(1...chunkLimit).shuffled(using: &rng).enumerated() {
             let firstChunkDetail = try await file.chunk.upload(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i.element,
                 data: .init(
                     string: "first-hello-world-\(i.element)" + dummyBytes
@@ -185,19 +185,20 @@ final class FileModuleTests: TestCase {
             let s = "hello-world-\(i.element)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i.element,
                 data: .init(string: s)
             )
 
-            XCTAssertEqual(chunkDetail.id, firstChunkDetail.id)
+            XCTAssertEqual(chunkDetail.uploadId, firstChunkDetail.uploadId)
+            XCTAssertEqual(chunkDetail.number, firstChunkDetail.number)
 
             orderedData += [(i.offset, i.element, s)]
             orderedData.sort { lhs, rhs in
                 lhs.element < rhs.element
             }
 
-            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.id)
             XCTAssertEqual(chunkDetail.number, i.element)
 
             let chunkList = try await file.chunk.list(
@@ -212,12 +213,12 @@ final class FileModuleTests: TestCase {
                     item.element.number,
                     orderedData[item.offset].element
                 )
-                XCTAssertEqual(item.element.uploadId, chunkedDetail.uploadId)
+                XCTAssertEqual(item.element.uploadId, chunkedDetail.id)
             }
         }
 
         let finishDetail = try await file.upload.finishChunked(
-            chunkedDetail.uploadId
+            chunkedDetail.id
         )
 
         XCTAssertFalse(finishDetail.resourceId.rawValue.isEmpty)
@@ -273,31 +274,27 @@ final class FileModuleTests: TestCase {
             let s = "hello-world-\(i)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i,
                 data: .init(string: s)
             )
 
-            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.id)
             XCTAssertEqual(chunkDetail.number, i)
         }
 
         for i in Array(1...(chunkLimit / 2)).shuffled(using: &rng) {
             let chunkDetail = try await file.chunk.require(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i
             )
 
-            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.id)
             XCTAssertEqual(chunkDetail.number, i)
-
-            let chunkDetailById = try await file.chunk.require(chunkDetail.id)
-
-            XCTAssertEqual(chunkDetail, chunkDetailById)
         }
 
         try await file.upload.abortChunked(
-            chunkedDetail.uploadId
+            chunkedDetail.id
         )
 
         for i in Array((chunkLimit / 2) + 1...chunkLimit).shuffled(using: &rng)
@@ -306,7 +303,7 @@ final class FileModuleTests: TestCase {
 
             do {
                 let _ = try await file.chunk.upload(
-                    uploadId: chunkedDetail.uploadId,
+                    uploadId: chunkedDetail.id,
                     number: i,
                     data: .init(string: s)
                 )
@@ -325,23 +322,22 @@ final class FileModuleTests: TestCase {
 
         let chunkedDetail = try await file.upload.startChunked()
 
-        var orderedData:
-            [(offset: Int, element: Int, data: String, id: ID<File.Chunk>)] = []
+        var orderedData: [(offset: Int, element: Int, data: String)] = []
         for i in Array(1...chunkLimit).shuffled(using: &rng).enumerated() {
             let s = "hello-world-\(i.element)" + dummyBytes
 
             let chunkDetail = try await file.chunk.upload(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: i.element,
                 data: .init(string: s)
             )
 
-            orderedData += [(i.offset, i.element, s, chunkDetail.id)]
+            orderedData += [(i.offset, i.element, s)]
             orderedData.sort { lhs, rhs in
                 lhs.element < rhs.element
             }
 
-            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.uploadId)
+            XCTAssertEqual(chunkDetail.uploadId, chunkedDetail.id)
             XCTAssertEqual(chunkDetail.number, i.element)
 
             let chunkList = try await file.chunk.list(
@@ -356,7 +352,7 @@ final class FileModuleTests: TestCase {
                     item.element.number,
                     orderedData[item.offset].element
                 )
-                XCTAssertEqual(item.element.uploadId, chunkedDetail.uploadId)
+                XCTAssertEqual(item.element.uploadId, chunkedDetail.id)
             }
         }
 
@@ -365,41 +361,32 @@ final class FileModuleTests: TestCase {
                 0...chunkLimit / 2
             ]
         let removedElements = todeleteitems[0...(todeleteitems.count / 2)]
-        let removedElementsById = todeleteitems[
-            (todeleteitems.count / 2 + 1)...
-        ]
 
         for removedElement in removedElements {
             try await file.chunk.delete(
-                uploadId: chunkedDetail.uploadId,
+                uploadId: chunkedDetail.id,
                 number: removedElement
             )
         }
 
-        for removedElement in removedElementsById {
-            try await file.chunk.delete(orderedData[removedElement - 1].id)
-        }
-
         orderedData.removeAll { item in
             removedElements.contains(item.element)
-                || removedElementsById.contains(item.element)
         }
 
         XCTAssertEqual(
-            orderedData.count + removedElements.count
-                + removedElementsById.count,
+            orderedData.count + removedElements.count,
             chunkLimit
         )
 
         let chunkList = try await file.chunk.list(
-            uploadId: chunkedDetail.uploadId,
+            uploadId: chunkedDetail.id,
             .init(sort: .init(by: .number, order: .asc), page: .init())
         )
 
         XCTAssertEqual(chunkList.items.count, orderedData.count)
 
         let finishDetail = try await file.upload.finishChunked(
-            chunkedDetail.uploadId
+            chunkedDetail.id
         )
 
         XCTAssertFalse(finishDetail.resourceId.rawValue.isEmpty)

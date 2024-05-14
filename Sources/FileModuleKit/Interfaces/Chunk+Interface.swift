@@ -6,6 +6,7 @@
 //
 
 import FeatherModuleKit
+import NIOCore
 
 public protocol FileChunkInterface: Sendable {
 
@@ -14,17 +15,13 @@ public protocol FileChunkInterface: Sendable {
         _ input: File.Chunk.List.Query
     ) async throws -> File.Chunk.List
 
-    func require(
-        _ id: ID<File.Chunk>
-    ) async throws -> File.Chunk.Detail
-
     func require(uploadId: ID<File.Upload>, number: Int) async throws
         -> File.Chunk.Detail
 
     func upload(
         uploadId: ID<File.Upload>,
         number: Int,
-        data: File.BinaryData
+        data: ByteBuffer
     ) async throws -> File.Chunk.Detail
 
     func bulkDelete(ids: [ID<File.Chunk>]) async throws

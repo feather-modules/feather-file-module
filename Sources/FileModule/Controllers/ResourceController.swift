@@ -12,6 +12,7 @@ import FeatherStorage
 import FileModuleDatabaseKit
 import FileModuleKit
 import Logging
+import NIOCore
 import NanoID
 
 struct ResourceController: FileResourceInterface,
@@ -42,7 +43,7 @@ struct ResourceController: FileResourceInterface,
         ]
 
     func download(_ id: ID<File.Resource>, range: ClosedRange<UInt64>?)
-        async throws -> File.BinaryData
+        async throws -> ByteBuffer
     {
         let db = try await components.database().connection()
         let storage = try await components.storage()
