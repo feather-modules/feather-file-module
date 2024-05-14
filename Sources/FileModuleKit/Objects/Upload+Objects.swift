@@ -17,7 +17,7 @@ extension File.Upload {
 
                 public enum Keys: SortKeyInterface {
                     case id
-                    case storageId
+                    case resourceId
                 }
 
                 public let by: Keys
@@ -46,11 +46,11 @@ extension File.Upload {
 
         public struct Item: Object {
             public let id: ID<File.Upload>
-            public let storageId: String
+            public let resourceId: ID<File.Resource>
 
-            public init(id: ID<File.Upload>, storageId: String) {
+            public init(id: ID<File.Upload>, resourceId: ID<File.Resource>) {
                 self.id = id
-                self.storageId = storageId
+                self.resourceId = resourceId
             }
         }
 
@@ -76,12 +76,12 @@ extension File.Upload {
     }
 
     public struct ChunkedDetail: Object {
-        public let uploadId: ID<File.Upload>
-        public let storageId: String
+        public let id: ID<File.Upload>
+        public let resourceId: ID<File.Resource>
 
-        public init(uploadId: ID<File.Upload>, storageId: String) {
-            self.uploadId = uploadId
-            self.storageId = storageId
+        public init(id: ID<File.Upload>, resourceId: ID<File.Resource>) {
+            self.id = id
+            self.resourceId = resourceId
         }
     }
 

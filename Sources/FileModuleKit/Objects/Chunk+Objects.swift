@@ -6,6 +6,7 @@
 //
 
 import FeatherModuleKit
+import NIOCore
 
 extension File.Chunk {
 
@@ -16,10 +17,8 @@ extension File.Chunk {
             public struct Sort: ListQuerySortInterface {
 
                 public enum Keys: SortKeyInterface {
-                    case id
                     case uploadId
                     case number
-                    case storageId
                 }
 
                 public let by: Keys
@@ -47,21 +46,15 @@ extension File.Chunk {
         }
 
         public struct Item: Object {
-            public let id: ID<File.Chunk>
             public let uploadId: ID<File.Upload>
             public let number: Int
-            public let storageId: String
 
             public init(
-                id: ID<File.Chunk>,
                 uploadId: ID<File.Upload>,
-                number: Int,
-                storageId: String
+                number: Int
             ) {
-                self.id = id
                 self.uploadId = uploadId
                 self.number = number
-                self.storageId = storageId
             }
         }
 
@@ -79,29 +72,23 @@ extension File.Chunk {
     }
 
     public struct Detail: Object {
-        public let id: ID<File.Chunk>
         public let uploadId: ID<File.Upload>
         public let number: Int
-        public let storageId: String
 
         public init(
-            id: ID<File.Chunk>,
             uploadId: ID<File.Upload>,
-            number: Int,
-            storageId: String
+            number: Int
         ) {
-            self.id = id
             self.uploadId = uploadId
             self.number = number
-            self.storageId = storageId
         }
     }
 
     public struct Upload: Object {
-        public let data: File.BinaryData
+        public let data: ByteBuffer
 
         public init(
-            data: File.BinaryData
+            data: ByteBuffer
         ) {
             self.data = data
         }

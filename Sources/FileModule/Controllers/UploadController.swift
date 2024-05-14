@@ -12,6 +12,7 @@ import FeatherStorage
 import FileModuleDatabaseKit
 import FileModuleKit
 import Logging
+import NIOCore
 import NanoID
 
 struct UploadController: FileUploadInterface,
@@ -121,7 +122,7 @@ struct UploadController: FileUploadInterface,
         )
     }
 
-    func simpleUpload(_ data: File.BinaryData) async throws
+    func simpleUpload(_ data: ByteBuffer) async throws
         -> File.Upload.SimpleDetail
     {
         let db = try await components.database().connection()

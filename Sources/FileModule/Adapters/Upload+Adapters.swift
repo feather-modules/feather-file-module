@@ -11,7 +11,7 @@ extension File.Upload.Model.ColumnNames: ListQuerySortKeyAdapter {
         switch listQuerySortKeys {
         case .id:
             self = .key
-        case .storageId:
+        case .resourceId:
             self = .storageKey
         }
     }
@@ -19,7 +19,7 @@ extension File.Upload.Model.ColumnNames: ListQuerySortKeyAdapter {
 
 extension File.Upload.List.Item: ListItemAdapter {
     public init(model: File.Upload.Model) throws {
-        self.init(id: model.key.toID(), storageId: model.storageKey)
+        self.init(id: model.key.toID(), resourceId: model.resourceKey.toID())
     }
 }
 
@@ -29,7 +29,7 @@ extension File.Upload.List: ListAdapter {
 
 extension File.Upload.ChunkedDetail: DetailAdapter {
     public init(model: File.Upload.Model) throws {
-        self.init(uploadId: model.key.toID(), storageId: model.storageKey)
+        self.init(id: model.key.toID(), resourceId: model.resourceKey.toID())
     }
 }
 

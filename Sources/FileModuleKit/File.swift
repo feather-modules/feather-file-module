@@ -1,7 +1,6 @@
 import FeatherACL
 import FeatherModuleKit
 import FeatherStorage
-import NIOCore
 
 extension FeatherACL.Permission {
 
@@ -11,8 +10,6 @@ extension FeatherACL.Permission {
 }
 
 public enum File {
-    public typealias BinaryData = ByteBuffer
-
     public enum ACL: ACLSet {
 
         public static var all: [FeatherACL.Permission] {

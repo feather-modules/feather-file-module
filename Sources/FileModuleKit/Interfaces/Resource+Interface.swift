@@ -6,6 +6,7 @@
 //
 
 import FeatherModuleKit
+import NIOCore
 
 public protocol FileResourceInterface: Sendable {
 
@@ -18,7 +19,7 @@ public protocol FileResourceInterface: Sendable {
     ) async throws -> File.Resource.Detail
 
     func download(_ id: ID<File.Resource>, range: ClosedRange<UInt64>?)
-        async throws -> File.BinaryData
+        async throws -> ByteBuffer
 
     func bulkDelete(ids: [ID<File.Resource>]) async throws
 
